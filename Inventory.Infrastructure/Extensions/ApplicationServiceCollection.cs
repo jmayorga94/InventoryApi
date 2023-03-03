@@ -1,4 +1,6 @@
-﻿using Inventory.Infrastructure.Context;
+﻿using Inventory.Application.Repositories;
+using Inventory.Infrastructure.Context;
+using Inventory.Infrastructure.Repositories.Items;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +23,12 @@ namespace Inventory.Infrastructure.Extensions
 
              }, ServiceLifetime.Transient);
 
+
+            return services;
+        }
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            services.AddTransient<IItemsRepository, ItemsRepository>();
 
             return services;
         }

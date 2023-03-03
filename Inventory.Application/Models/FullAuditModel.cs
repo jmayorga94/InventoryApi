@@ -2,7 +2,7 @@
 
 namespace Inventory.Application.Models
 {
-    public abstract class FullAuditableModel : IIdentityModel, IAuditedModel, IActivateableModel
+    public abstract class FullAuditModel : IIdentityModel, IAuditedModel, IActivateableModel
     {
         public  int Id { get; set; }
         public  string CreatedByUserId { get; set; }

@@ -10,7 +10,7 @@ var config = builder.Configuration;
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddPersistence(config["Database:ConnectionString"]);
-
+builder.Services.AddRepositories();
 
 var app = builder.Build();
 

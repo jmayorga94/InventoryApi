@@ -16,6 +16,21 @@ namespace Inventory.Infrastructure.Context
         }
         public DbSet<Item> Items { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Item>().ToTable("Items");
+            modelBuilder.Entity<Item>()
+                .HasKey(k => k.Id);
+            modelBuilder.Entity<Item>()
+                .Property(i => i.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Item>().Property(i => i.Description).HasMaxLength(50);
+            modelBuilder.Entity<Item>().Property(i => i.Name).HasMaxLength(30);
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+        }
+
         public override int SaveChanges()
         {
 
@@ -29,10 +44,13 @@ namespace Inventory.Infrastructure.Context
                     {
                         case EntityState.Added:
                             referenceEntity.CreatedDate = DateTime.Now;
+                            referenceEntity.CreatedByUserId = "jmayorga"; //ToDo get user
+                            referenceEntity.LastModifiedUserId = "jmayorga"; //ToDo get user
                             break;
                         case EntityState.Deleted:
                         case EntityState.Modified:
                             referenceEntity.LastModifiedDate = DateTime.Now;
+                            referenceEntity.LastModifiedUserId = "jmayorga"; //ToDo get user
                             break;
                         default:
                             break;
@@ -41,6 +59,7 @@ namespace Inventory.Infrastructure.Context
             }
             return base.SaveChanges();
     }
+
 
     }
 }
